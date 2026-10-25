@@ -252,6 +252,41 @@ class TestTaskManager(unittest.TestCase):
 
         self.assertFalse(result)
 
+    def test_sort_tasks_by_due_date(self) -> None:
+        self.manager.add_task(
+            "Estudar Python",
+            "Programação",
+            "Alta",
+            "2026-10-30"
+        )
+
+        self.manager.add_task(
+            "Fazer trabalho",
+            "Trabalho escolar",
+            "Média",
+            "2026-10-25"
+        )
+
+        self.manager.add_task(
+            "Estudar inglês",
+            "Vocabulário",
+            "Baixa",
+            "2026-10-28"
+        )
+
+        sorted_tasks = self.manager.get_tasks_sorted_by_due_date()
+
+        self.assertEqual(
+            [task.task_id for task in sorted_tasks],
+            [2, 3, 1]
+        )
+
+        # A ordenação não deve alterar a lista original.
+        self.assertEqual(
+            [task.task_id for task in self.manager.get_tasks()],
+            [1, 2, 3]
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

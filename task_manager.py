@@ -1,3 +1,4 @@
+
 from task import Task
 from storage import load_tasks, save_tasks
 
@@ -52,8 +53,6 @@ class TaskManager:
 
         return False
 
-
-    
     def edit_task(
         self,
         task_id: int,
@@ -74,20 +73,17 @@ class TaskManager:
 
         return False
 
-
     def get_tasks_by_status(self, completed: bool) -> list[Task]:
         return [
             task for task in self.tasks
             if task.completed == completed
         ]
 
-
     def get_tasks_by_priority(self, priority: str) -> list[Task]:
         return [
             task for task in self.tasks
             if task.priority.casefold() == priority.casefold()
         ]
-
 
     def search_tasks(self, query: str) -> list[Task]:
         query = query.strip().casefold()
@@ -96,7 +92,6 @@ class TaskManager:
             task for task in self.tasks
             if query in task.title.casefold()
         ]
-
 
     def get_statistics(self) -> dict[str, int]:
         total = len(self.tasks)
@@ -113,3 +108,9 @@ class TaskManager:
             "completed": completed,
             "pending": pending
         }
+
+    def get_tasks_sorted_by_due_date(self) -> list[Task]:
+        return sorted(
+            self.tasks,
+            key=lambda task: task.due_date
+        )

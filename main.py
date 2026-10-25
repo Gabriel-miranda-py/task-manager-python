@@ -184,6 +184,7 @@ while True:
     print("6. Pesquisar tarefa por título")
     print("7. Ver estatísticas")
     print("8. Editar tarefa")
+    print("9. Ordenar tarefas por prazo")
     print("0. Sair")
 
     option = input("Escolhe uma opção: ").strip()
@@ -249,6 +250,10 @@ while True:
 
     elif option == "8":
         edit_task_menu()
+
+    elif option == "9":
+        tasks = manager.get_tasks_sorted_by_due_date()
+        show_tasks(tasks)
 
     elif option == "0":
             print("A sair do Task Manager...")
