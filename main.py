@@ -24,7 +24,12 @@ def show_tasks(tasks: list[Task] | None = None) -> None:
     print("\n========== AS TUAS TAREFAS ==========")
 
     for task in tasks:
-        status = "Concluída" if task.completed else "Pendente"
+       if task.completed:
+         status = "Concluída"
+       elif manager.is_overdue(task):
+         status = "ATRASADA"
+       else:
+        status = "Pendente"
 
         print(f"\nID: {task.task_id}")
         print(f"Título: {task.title}")
@@ -185,7 +190,8 @@ while True:
     print("7. Ver estatísticas")
     print("8. Editar tarefa")
     print("9. Ordenar tarefas por prazo")
-    print("0. Sair")
+    print("10. Ver tarefas atrasadas")
+    print("0. Sair") 
 
     option = input("Escolhe uma opção: ").strip()
 
@@ -255,6 +261,15 @@ while True:
         tasks = manager.get_tasks_sorted_by_due_date()
         show_tasks(tasks)
 
+    elif option == "10":
+        overdue_tasks = manager.get_overdue_tasks()
+
+        print(
+            f"\nForam encontradas"
+            f"{len(overdue_tasks)} tarefa(s) atrasada(s)."
+        )   
+
+        show_tasks(overdue_tasks) 
     elif option == "0":
             print("A sair do Task Manager...")
             break

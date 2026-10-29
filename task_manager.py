@@ -1,4 +1,5 @@
 
+from datetime import date 
 from task import Task
 from storage import load_tasks, save_tasks
 
@@ -114,3 +115,31 @@ class TaskManager:
             self.tasks,
             key=lambda task: task.due_date
         )
+
+
+    
+    def is_overdue(
+        self,
+        task: Task,
+        today: date | None = None
+    ) -> bool:
+        if task.completed:
+            return False
+
+        reference_date = today if today is not None else date.today()
+
+        try:
+            due_date = date.fromisoformat(task.due_date)
+        except ValueError:
+            return False
+
+        return due_date < reference_date
+
+    def get_overdue_tasks(
+        self,
+        today: date | None = None
+    ) -> list[Task]:
+        return [
+            task for task in self.tasks
+            if self.is_overdue(task, today)
+        ]
